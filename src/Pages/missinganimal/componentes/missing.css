@@ -1,0 +1,904 @@
+@import '../../../context/variables.css';
+/* Botão para gerar PDF no popup */
+.btn-pdf {
+  background-color: var(--green-primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px var(--box-shadow-color);
+  transition: all 0.3s ease;
+}
+
+.btn-pdf:hover {
+  background-color: var(--green-dark, #1b8e4b);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  filter: brightness(1.12);
+}
+@import '../../../context/variables.css';
+
+/* === CARD DE ANIMAL DESAPARECIDO (PADRÃO HOME) === - Usar nomes de classes específicos para cada contexto de botão e evitar duplicidade. */
+/* Organização: variáveis globais importadas no topo, comentários claros, sem !important desnecessário. */
+.animal-card {
+  background-color: var(--white-background);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.animal-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.animal-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.animal-info {
+  padding: 1rem;
+}
+
+.animal-info h3 {
+  font-family: var(--font-main);
+  color: var(--black-text-details);
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.animal-info p {
+  font-size: 0.9rem;
+  color: var(--darkgray-background);
+}
+
+.animal-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  margin-top: 10px !important;
+  color: var(--darkgray-background);
+}
+
+.animal-date {
+  font-size: 0.85rem;
+  color: var(--darkgray-background);
+  margin-top: 8px;
+}
+
+.btn-alert {
+  margin-top: 18px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--box-shadow-color);
+  transition: background 0.2s, box-shadow 0.2s;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+
+.btn-alert:hover {
+  background-color: var(--green-dark, #1b8e4b);
+  box-shadow: 0 4px 16px var(--box-shadow-color);
+}
+/* === CARD DE ANIMAL DESAPARECIDO === */
+.missing-animal-card {
+  background-color: var(--white-background);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px var(--box-shadow-color);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.missing-animal-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.missing-animal-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+}
+
+.missing-animal-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.missing-animal-info h3 {
+  font-family: var(--font-main);
+  color: var(--black-text-details);
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.missing-animal-breed {
+  font-size: 0.9rem;
+  color: var(--darkgray-background);
+}
+
+.missing-animal-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  color: var(--darkgray-background);
+  }
+
+.missing-animal-lastseen {
+  font-size: 0.85rem;
+  color: var(--darkgray-background);
+  margin-top: 8px;
+}
+
+.info-button {
+  margin-top: 18px;
+  background-color: var(--green-primary);
+  color: var(--white-background);
+  border: none;
+  border-radius: 30px;
+  padding: 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--box-shadow-color);
+  transition: background 0.2s, box-shadow 0.2s;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.info-button:hover {
+  background-color: var(--green-primary);
+  box-shadow: 0 4px 16px var(--box-shadow-color);
+  filter: brightness(1.05);
+}
+
+@import '../../../context/variables.css';
+
+/* ===== ESTILOS GERAIS ===== */
+.missing-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--white-background);
+  color: var(--black-text-details);
+  border-radius: 30px;
+  box-shadow: 0 4px 12px var(--box-shadow-color);
+}
+
+.form-title {
+  text-align: center;
+  color: var(--green-primary);  
+  margin-bottom: 30px;
+  font-size: 28px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.form-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--lightgray-background);
+}
+
+.section-title {
+  color: var(--green-primary);
+  margin-bottom: 20px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-row .form-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--black-text-details);
+}
+
+/* ===== CAMPOS DE ENTRADA CORRIGIDOS ===== */
+input[type="text"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--lightgray-background);
+  border-radius: 20px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: var(--white-background);
+  color: var(--black-text-details);
+}
+
+input[type="text"]:hover,
+input[type="tel"]:hover,
+input[type="date"]:hover,
+input[type="number"]:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--green-primary);
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--green-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.25);
+}
+
+/* ===== LISTA SUSPENSA CORRIGIDA ===== */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232ecc71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  cursor: pointer;
+  padding-right: 40px;
+}
+
+/* Opções da lista suspensa */
+select option {
+  background: black;
+  color: white;
+  padding: 10px;
+}
+
+select option:hover {
+  background: var(--green-primary) !important;
+  color: black !important;
+}
+
+select option:checked {
+  background: var(--green-primary);
+  color: black;
+  font-weight: bold;
+}
+
+/* ===== BOTÃO ADICIONAR FOTOS ===== */
+.photo-upload-container {
+  border: 2px dashed var(--lightgray-background);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  background-color: var(--white-background);
+}
+
+.upload-button {
+  background-color: var(--green-primary);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+/* Mesma animação do botão principal */
+.upload-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  filter: brightness(1.12);
+}
+
+.photo-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.photo-preview {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-photo {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(231, 76, 60, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--darkgray-background);
+  margin-top: 8px;
+}
+
+/* ===== MAPA ===== */
+.map-container {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--lightgray-background);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 300px;
+}
+
+/* ===== SUGESTÕES DE ENDEREÇO ===== */
+.address-suggestions {
+  margin-top: 10px;
+  border: 1px solid var(--lightgray-background);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--white-background);
+}
+
+/* Lista de sugestões corrigida */
+.suggestion-item {
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--lightgray-background);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--black-text-details);
+  background: black; /* Fundo preto */
+  color: white; /* Texto branco */
+}
+
+.suggestion-item:hover {
+  background: var(--green-primary) !important; /* Verde ao passar mouse */
+  color: black !important;
+}
+
+/* ===== BOTÃO PRINCIPAL SIMPLIFICADO ===== */
+.form-actions {
+  text-align: center;
+  margin-top: 30px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.submit-button {
+  background-color: var(--green-primary);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+/* Animação simplificada mas eficaz */
+.submit-button:hover {
+  background-color: var(--green-primary) !important;
+  opacity: 1 !important;
+  filter: brightness(1.12);
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.submit-button:active {
+  transform: translateY(1px);
+}
+
+.submit-button:disabled {
+  background-color: var(--darkgray-background);
+  cursor: not-allowed;
+}
+
+.alert {
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.alert.success {
+  background-color: rgba(46, 204, 113, 0.15);
+  color: var(--green-primary);
+  border: 1px solid var(--green-primary);
+}
+
+.alert.error {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+}
+
+/* ===== TEMA ESCURO ===== */
+html[data-theme="dark"] .missing-form-container {
+  background-color: var(--dark-background);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .form-title,
+html[data-theme="dark"] .section-title,
+html[data-theme="dark"] label,
+html[data-theme="dark"] .hint,
+html[data-theme="dark"] .suggestion-item,
+html[data-theme="dark"] .leaflet-popup-content {
+  color: white !important;
+}
+
+html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] input[type="tel"],
+html[data-theme="dark"] input[type="date"],
+html[data-theme="dark"] input[type="number"],
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  background-color: var(--dark-elements);
+  color: white !important;
+  border-color: #444;
+}
+
+html[data-theme="dark"] select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+html[data-theme="dark"] .photo-upload-container {
+  background-color: var(--dark-elements);
+  border-color: #444;
+}
+
+html[data-theme="dark"] .address-suggestions {
+  background-color: var(--dark-elements);
+  border-color: #444;
+}
+
+html[data-theme="dark"] .suggestion-item {
+  background: #222;
+  border-color: #333;
+}
+
+html[data-theme="dark"] .suggestion-item:hover {
+  background: var(--green-primary) !important;
+  color: black !important;
+}
+
+html[data-theme="dark"] .map-container {
+  border-color: #444;
+}
+
+html[data-theme="dark"] .leaflet-popup-content-wrapper {
+  background-color: #222;
+  color: white;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media screen and (max-width: 768px) {
+  .missing-form-container {
+    padding: 15px;
+    border-radius: 16px;
+  }
+  
+  .form-title {
+    font-size: 24px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .photo-preview {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .map-container {
+    height: 250px;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 16px;
+  }
+}
+
+/* src/Pages/missinganimal/components/missing.css */
+/* Estilos gerais */
+
+body {
+  background-color: var(--lightgray-background);
+}
+
+.missing-home-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.header-section h1 {
+  margin: 0;
+  color: var(--darkgray-background);
+  font-size: 1.8rem;
+}
+
+/* Botão de reportar */
+.btn-report {
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-report:hover {
+  background-color: #c0392b;
+  box-shadow: none;
+  transform: none;
+}
+
+.icon-plus {
+  font-size: 18px;
+}
+
+/* Estilos do mapa */
+.map-container {
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.map-legend {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #eee;
+}
+
+.legend-icon {
+  width: 15px;
+  height: 15px;
+  background-color: #e74c3c;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Lista de animais */
+.animal-list-section {
+  margin-top: 30px;
+}
+
+.animal-list-section h2 {
+  color: var(--darkgray-background);
+  /* border-bottom: 2px solid #ecf0f1; removido para tirar a linha */
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.animal-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+/* Card de animal */
+.animal-card {
+  background: var(--white-background); 
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--lightgray-background);
+}
+
+.animal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-image {
+  height: 200px;
+  overflow: hidden;
+  background-color: #f1f2f6;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.animal-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.placeholder-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: #dfe4ea;
+  color: #747d8c;
+  font-style: italic;
+}
+
+.card-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white-background);
+}
+
+.card-content h3 {
+  margin-top: 0;
+  color: var(--black-text-details);
+  font-size: 1.4em;
+}
+
+.card-content p {
+  margin: 8px 0;
+  color: var(--darkgray-background);
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 15px;
+}
+
+.btn-alert, .btn-details {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: all 0.2s;
+}
+
+.btn-alert {
+  background-color: var(--green-primary);
+  color: var(--white-background);
+}
+
+.btn-alert:hover {
+  background-color: var(--green-primary);
+  filter: brightness(1.05);
+  transform: scale(1.03);
+}
+
+.btn-details {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.btn-details:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+}
+
+/* Estados vazios e loading */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: var(--white-background);
+  border-radius: 8px;
+  margin-top: 20px;
+  border: 1px dashed var(--lightgray-background);
+}
+
+.empty-state p {
+  margin-bottom: 20px;
+  color: var(--darkgray-background);
+  font-size: 1.1rem;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .animal-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .header-section h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-actions {
+    flex-direction: column;
+  }
+  
+  .btn-alert, .btn-details {
+    width: 100%;
+  }
+}
+
+/* ...códigos anteriores do missing.css... */
+
+/* Estilos do modal */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: var(--white-background);
+  color: var(--black-text-details);
+  padding: 2rem;
+  border-radius: 8px;
+  position: relative;
+  min-width: 320px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px var(--box-shadow-color);
+}
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  color: var(--darkgray-background);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  font-weight: bold;
+  line-height: 1;
+}
+.close-btn::after {
+  content: "\00d7";
+  font-size: 2rem;
+  color: inherit;
+  display: block;
+}
+.close-btn:hover::after {
+  color: var(--green-primary);
+}

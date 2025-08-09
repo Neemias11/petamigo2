@@ -8,7 +8,9 @@ import { IoChatbubbleEllipses } from "react-icons/io5";
 import { HiVideoCamera } from "react-icons/hi";
 import { GoHomeFill } from "react-icons/go";
 import { LuLogOut } from "react-icons/lu";
+import { MdError } from "react-icons/md";
 import logo from "@/assets/logo.png";
+
 
 // A lógica getInitialTheme e useEffect para o tema permanecem as mesmas
 const getInitialTheme = () => {
@@ -81,6 +83,12 @@ function Navbar() {
                         <span className="sidebar-icon"><IoChatbubbleEllipses /></span>
                         <span className="sidebar-text">Comunidade</span>
                     </NavLink>
+                </li>
+                <li className="sidebar-item">
+                   <NavLink to="/missinganimal">
+                       <span className="sidebar-icon"><MdError /></span>
+                       <span className="sidebar-text">Desaparecidos</span>
+                   </NavLink>
                 </li>
                 <li className="sidebar-item">
                     <NavLink to="/profile">

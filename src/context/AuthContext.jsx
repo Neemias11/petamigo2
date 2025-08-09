@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { supabase } from '../supabaseClient'; // Garanta que o caminho está correto
 
+
 // 1. Cria o Contexto (sem alterações)
 const AuthContext = createContext();
 

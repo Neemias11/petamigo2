@@ -1,0 +1,70 @@
+.missing-animal-card {
+  background-color: var(--white-background);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px var(--box-shadow-color);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.missing-animal-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.missing-animal-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+}
+
+.missing-animal-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.missing-animal-info h3 {
+  font-family: var(--font-main);
+  color: var(--black-text-details);
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.missing-animal-breed {
+  font-size: 0.9rem;
+  color: var(--darkgray-background);
+}
+
+.missing-animal-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  color: var(--darkgray-background);
+}
+
+.info-button {
+  margin-top: 18px;
+  background-color: var(--green-primary);
+  color: var(--white-background);
+  border: none;
+  border-radius: 30px;
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--box-shadow-color);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.info-button:hover {
+  background-color: var(--green-dark, #1b8e4b);
+  box-shadow: 0 4px 16px var(--box-shadow-color);
+}
