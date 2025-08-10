@@ -1,17 +1,18 @@
+// home/components/top.jsx
 import React from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa6";
 import { RiHeart3Fill } from "react-icons/ri";
 import { IoNotifications } from "react-icons/io5";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
+import DefaultAvatar from "@/assets/default-avatar.png";
 import { useAuth } from "@/context/AuthContext.jsx";
 
-function Top() {
-    // 3. ACESSE OS DADOS GLOBAIS DO USUÁRIO AQUI
+// 1. Adicionando onOpenSidebar como prop
+function Top({ searchTerm, setSearchTerm, onOpenSidebar }) {
     const { user, profile, loading } = useAuth();
 
-    // Enquanto os dados carregam, podemos mostrar um placeholder
     if (loading) {
         return (
             <div className="top-container">
@@ -21,19 +22,15 @@ function Top() {
         );
     }
 
-    // Se não houver perfil (usuário não logado), podemos não mostrar nada ou um botão de login
     if (!profile) {
         return (
             <div className="top-container">
-                {/* Você pode adicionar um link de login aqui se quiser */}
+                {/* ... */}
             </div>
         );
     }
 
-    // 4. LÓGICA PARA EXIBIR DADOS DINÂMICOS
-    // Define qual nome exibir com base no tipo de usuário
     const displayName = profile.user_type === 'ONG' ? profile.nome_ong : profile.nome_exibicao || profile.nome_completo;
-    // Usa a foto do perfil ou uma imagem padrão se não houver
     const avatarUrl = profile.avatar_url || DefaultAvatar;
 
     return (
@@ -49,8 +46,11 @@ function Top() {
                     className="search-input"
                     type="text"
                     placeholder="Pesquisar animal"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button className="filter-button">
+                {/* 2. Adicionando o evento onClick para abrir a sidebar */}
+                <button className="filter-button" onClick={onOpenSidebar}>
                     <FaFilter className="filter-icon" />
                 </button>
             </div>
@@ -62,7 +62,7 @@ function Top() {
                     <IoNotifications />
                 </button>
                 <Link to="/profile" className="profile-box">
-                    <img src={avatarUrl} alt="foto de perfil"/>
+                    <img src={avatarUrl} alt="foto de perfil" />
                     <div>
                         <h3>{displayName}</h3>
                         <span>{user.email}</span>

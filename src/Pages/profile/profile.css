@@ -69,7 +69,7 @@
     color: var(--black-text-details);
 }
 
-.profile-name-complete {
+.profile-fullname {
     color: var(--darkgray-background);
 }
 
@@ -258,4 +258,116 @@
 .profile-grid-content {
     font-size: 1.2rem;
     color: var(--darkgray-background);
+}
+
+
+
+
+
+
+
+
+
+
+/* --- Floating Action Button (FAB) --- */
+
+/* Container principal que fica fixo na tela */
+.fab-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+/* Container que agrupa TODOS os botões para o posicionamento */
+.fab-wrapper {
+    position: relative;
+    width: 56px;
+    height: 56px;
+}
+
+/* Estilo base para todos os botões */
+.fab-main, .fab-action-btn {
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+/* Botão principal (com o '+') */
+.fab-main {
+    width: 5.5rem;
+    height: 5.5rem;
+    background-color: var(--green-primary);
+    color: white;
+    z-index: 10;
+    /* Adicionada transição para a rotação */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Animação de rotação no botão principal */
+.fab-main.open {
+    transform: rotate(45deg);
+}
+
+/* Botões de ação individuais */
+.fab-action-btn {
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: var(--white-background);
+    color: var(--green-primary);
+    z-index: 9;
+    
+    /* ESTADO INICIAL (ESCONDIDO) */
+    /* Começam invisíveis e exatamente na mesma posição do botão principal */
+    transform: translate(0, 0) scale(1); /* Mantém o scale(1) para não diminuir */
+    opacity: 0;
+    
+    /* TRANSIÇÃO SUAVE */
+    /* Anima a opacidade e a transformação */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s;
+}
+
+/* Quando o menu está aberto, os botões se tornam visíveis */
+.fab-actions.open .fab-action-btn {
+    opacity: 1;
+}
+
+/* Efeito de hover precisa ser aplicado aos estados aberto e fechado */
+.fab-action-btn:hover {
+    transform: scale(1.1); /* Efeito de hover no estado fechado (invisível) */
+}
+
+/* POSICIONAMENTO FINAL (QUANDO O MENU ESTÁ ABERTO) */
+/* Agora, a transformação é aplicada apenas quando a classe .open está presente */
+
+/* Posição do botão 1 (em cima) */
+.fab-actions.open .fab-action-btn:nth-child(1) {
+    transform: translate(8px, -130px);
+}
+.fab-actions.open .fab-action-btn:nth-child(1):hover {
+    transform: translate(8px, -130px) scale(1.1);
+}
+
+/* Posição do botão 2 (diagonal superior esquerda) */
+.fab-actions.open .fab-action-btn:nth-child(2) {
+    transform: translate(-90px, -90px);
+}
+.fab-actions.open .fab-action-btn:nth-child(2):hover {
+    transform: translate(-90px, -90px) scale(1.1);
+}
+
+/* Posição do botão 3 (à esquerda) */
+.fab-actions.open .fab-action-btn:nth-child(3) {
+    transform: translate(-130px, 8px);
+}
+.fab-actions.open .fab-action-btn:nth-child(3):hover {
+    transform: translate(-130px, 8px) scale(1.1);
 }

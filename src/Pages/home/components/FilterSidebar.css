@@ -1,0 +1,74 @@
+/* home/components/FilterSidebar.css */
+
+.filter-sidebar {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Escondido, mas com mais espaço */
+    width: 350px; /* Largura maior */
+    height: 100%;
+    background-color: var(--background-color-secondary, #282c34); /* Cor escura do tema */
+    box-shadow: -4px 0 10px rgba(0,0,0,0.5); /* Sombra mais forte */
+    z-index: 1000;
+    transition: right 0.4s ease-in-out; /* Transição mais suave e longa */
+    padding: 30px; /* Mais padding */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-sidebar.is-open {
+    right: 0; /* Exibido na tela */
+}
+
+/* O overlay que cobre o resto da tela */
+.filter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 999;
+    cursor: pointer;
+}
+
+.close-button {
+    background-color: var(--primary-color, #61dafb);
+    color: var(--background-color, #20232a);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    align-self: flex-end; /* Alinha o botão de fechar à direita */
+    margin-bottom: 20px;
+}
+
+.filter-sidebar h3 {
+    color: var(--text-color, #f0f0f0);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--border-color, #444);
+    padding-bottom: 10px;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color, #f0f0f0);
+    font-size: 1rem;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #555);
+    background-color: var(--input-background-color, #333);
+    color: var(--text-color, #f0f0f0);
+    font-size: 1rem;
+}

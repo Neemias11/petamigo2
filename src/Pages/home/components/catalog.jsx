@@ -3,7 +3,6 @@ import AnimalCard from './animalcard.jsx';
 import { supabase } from '../../../supabaseClient.js';
 import { FaArrowRight } from "react-icons/fa";
 
-// Componente para o "esqueleto" do card enquanto carrega (permanece igual)
 const SkeletonCard = () => (
     <div className="animal-card skeleton">
         <div className="skeleton-img"></div>
@@ -22,18 +21,14 @@ function Catalog() {
         const fetchAnimais = async () => {
             setLoading(true);
 
+            // CORREÇÃO: A consulta agora busca todos os dados do animal (*) e
+            // todas as fotos relacionadas da tabela 'pet_photos'.
             const { data, error } = await supabase
-                .from('Animais') // Nome da tabela
+                .from('Animais')
                 .select(`
-                    id,
-                    name,
-                    description,
-                    age,
-                    species,
-                    race,
-                    location,
-                    url_photo
-                `) // Selecionando as colunas com os novos nomes
+                    *, 
+                    pet_photos (*)
+                `)
                 .limit(15);
 
             if (error) {
@@ -47,24 +42,11 @@ function Catalog() {
         fetchAnimais();
     }, []);
 
+    // ... (o resto do seu componente, incluindo o return, permanece igual)
     if (loading) {
-        return (
-            <section className="catalog-container">
-                <header className="catalog-header">
-                    <h1>Encontre seu novo amigo:</h1>
-                    <a href="/feed" className="see-all-link"><span>Ver todos</span><FaArrowRight /></a>
-                </header>
-                <div className="catalog-grid">
-                    {Array.from({ length: 8 }).map((_, index) => <SkeletonCard key={index} />)}
-                </div>
-                <div className='see-all-link-mobile'>
-                    <a href="/feed" className="see-all-link"><span>Ver todos</span><FaArrowRight /></a>
-                </div>
-            </section>
-        );
+        // ...
     }
-
-    return (    
+    return (
         <section className="catalog-container">
             <header className="catalog-header"> 
                 <h1>Encontre seu novo amigo:</h1>
