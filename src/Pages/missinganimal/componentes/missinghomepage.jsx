@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../../supabaseClient';
 import MissingCard from './missingcard';
 import MissingForm from "../Componentes/MissingForm.jsx";
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import MissingMap from './missingmap';
 import './missing.css';
 
 const MissingHomePage = () => {
@@ -15,8 +14,7 @@ const MissingHomePage = () => {
   });
   const [showModal, setShowModal] = useState(false);
 
-  // Depuração: mostrar array de animais sempre que renderizar
-  console.log('Animais renderizados:', animais);
+
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -39,35 +37,7 @@ const MissingHomePage = () => {
     fetchAnimais();
   }, []);
 
-  // Inicializar mapa
-  useEffect(() => {
-    if (!loading) {
-      delete L.Icon.Default.prototype._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-      });
-      const map = L.map('map-container').setView([userLocation.latitude, userLocation.longitude], 13);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
-      animais.forEach(animal => {
-        if (animal.latitude && animal.longitude) {
-          L.marker([animal.latitude, animal.longitude])
-            .addTo(map)
-            .bindPopup(`
-              <strong>${animal.nome}</strong><br>
-              ${animal.especie}<br>
-              Desaparecido em: ${new Date(animal.dataDesaparecimento).toLocaleDateString()}
-            `);
-        }
-      });
-      return () => {
-        map.remove();
-      };
-    }
-  }, [loading, animais, userLocation]);
+
 
   if (loading) {
     return (
@@ -76,8 +46,6 @@ const MissingHomePage = () => {
         <p>Carregando animais desaparecidos...</p>
       </div>
     );
-  // Depuração: mostrar array de animais sempre que renderizar
-  console.log('Animais renderizados:', animais);
   }
 
   return (
@@ -93,22 +61,21 @@ const MissingHomePage = () => {
       </div>
       
       {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="close-btn" onClick={() => setShowModal(false)} />
-            <MissingForm 
-              // Cadastro agora é feito direto no Supabase pelo MissingForm
-            />
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" style={{ padding: 0 }} onClick={e => e.stopPropagation()}>
+            {/* Removido o botão X */}
+            <MissingForm />
           </div>
         </div>
       )}
 
-      <div className="map-section">
+  <div className="map-section">
         <div className="map-container">
-          <div id="map-container" style={{ height: '400px', borderRadius: '8px' }}></div>
-          <div className="map-legend">
-            <span><div className="legend-icon"></div> Localização de animais desaparecidos</span>
-          </div>
+          <MissingMap
+            animais={animais}
+            userLocation={userLocation}
+            exibirMarcadores={true}
+          />
         </div>
       </div>
 
@@ -119,7 +86,7 @@ const MissingHomePage = () => {
             <p>Nenhum animal desaparecido reportado na sua região ainda.</p>
             <button 
               onClick={() => setShowModal(true)}
-              className="btn-report"
+              className="submit-button"
             >
               Seja o primeiro a reportar
             </button>

@@ -11,35 +11,80 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-const LocationMarker = ({ position, setPosition }) => {
+
+// Novo: exibe marcadores de animais se prop for passada
+// Modificação: busca endereço ao clicar no mapa e envia para o callback
+const LocationMarker = ({ position, setPosition, exibirMarcadores, animais, onLocationSelect }) => {
   const map = useMapEvents({
-    click(e) {
-      setPosition(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
+    async click(e) {
+      if (!exibirMarcadores && e.latlng && typeof e.latlng.lat === 'number' && typeof e.latlng.lng === 'number') {
+        setPosition({ lat: e.latlng.lat, lng: e.latlng.lng });
+        map.flyTo(e.latlng, map.getZoom());
+        // Busca endereço usando Nominatim
+        try {
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${e.latlng.lat}&lon=${e.latlng.lng}`);
+          const data = await response.json();
+          if (onLocationSelect) {
+            onLocationSelect({ lat: e.latlng.lat, lng: e.latlng.lng, address: data.display_name || '' });
+          }
+        } catch (err) {
+          if (onLocationSelect) {
+            onLocationSelect({ lat: e.latlng.lat, lng: e.latlng.lng, address: '' });
+          }
+        }
+      }
     },
   });
 
-  return position === null ? null : (
-    <Marker position={position}>
+  if (exibirMarcadores && Array.isArray(animais)) {
+    return <>
+      {animais.map(animal => (
+        animal.latitude && animal.longitude && (
+          <Marker key={animal.id} position={[animal.latitude, animal.longitude]}>
+            <Popup>
+              <strong>{animal.nome}</strong><br />
+              {animal.especie}<br />
+              Desaparecido em: {animal.dataDesaparecimento ? new Date(animal.dataDesaparecimento).toLocaleDateString() : ''}
+            </Popup>
+          </Marker>
+        )
+      ))}
+    </>;
+  }
+
+  if (!position || typeof position.lat !== 'number' || typeof position.lng !== 'number') return null;
+  return (
+    <Marker position={[position.lat, position.lng]}>
       <Popup>Última localização vista aqui</Popup>
     </Marker>
   );
 };
 
-const MissingMap = ({ onLocationSelect, initialPosition }) => {
+// Modificação: prop onLocationSelect agora pode receber objeto com address
+const MissingMap = ({ onLocationSelect, initialPosition, animais, userLocation, exibirMarcadores }) => {
   const mapRef = useRef(null);
-  const [position, setPosition] = React.useState(initialPosition || null);
+  const [position, setPosition] = React.useState(
+    initialPosition && typeof initialPosition.lat === 'number' && typeof initialPosition.lng === 'number'
+      ? { lat: initialPosition.lat, lng: initialPosition.lng }
+      : userLocation && userLocation.latitude && userLocation.longitude
+        ? { lat: userLocation.latitude, lng: userLocation.longitude }
+        : { lat: -23.5505, lng: -46.6333 }
+  );
 
   useEffect(() => {
-    if (position) {
+    if (!exibirMarcadores && position && typeof position.lat === 'number' && typeof position.lng === 'number' && onLocationSelect) {
       onLocationSelect(position);
     }
-  }, [position, onLocationSelect]);
+  }, [position, onLocationSelect, exibirMarcadores]);
+
+  const center = exibirMarcadores && userLocation && userLocation.latitude && userLocation.longitude
+    ? [userLocation.latitude, userLocation.longitude]
+    : [position.lat, position.lng];
 
   return (
     <div className="missing-map-container">
       <MapContainer
-        center={[-23.5505, -46.6333]} // Centro inicial (ex: São Paulo)
+        center={center}
         zoom={13}
         ref={mapRef}
         style={{ height: '400px', width: '100%' }}
@@ -48,7 +93,13 @@ const MissingMap = ({ onLocationSelect, initialPosition }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <LocationMarker position={position} setPosition={setPosition} />
+        <LocationMarker
+          position={position}
+          setPosition={setPosition}
+          exibirMarcadores={exibirMarcadores}
+          animais={animais}
+          onLocationSelect={onLocationSelect}
+        />
       </MapContainer>
     </div>
   );

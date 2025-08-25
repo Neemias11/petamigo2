@@ -1,31 +1,30 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 import MissingMap from './MissingMap';
-import './missing.css';
+// import axios from 'axios';
+import './missing.css?v=1';
 
 const user = { id: 1, token: 'fake-token', phone: '(00) 00000-0000' };
 const MissingForm = () => {
   const [formData, setFormData] = useState({
-  petName: '',
-  species: 'dog',
-  breed: '',
-  size: '',
-  lastSeenAddress: '',
-  lastSeenDate: new Date().toISOString().split('T')[0],
-  description: '',
-  contactPhone: '', // Corrigido para permitir edição
-  photos: [],
-  reward: '', // Corrigido para garantir edição
-  urgency: 'medium',
-  coordinates: null,
+    petName: '',
+    species: 'dog',
+    breed: '',
+    size: '',
+    lastSeenAddress: '',
+    lastSeenDate: new Date().toISOString().split('T')[0],
+    description: '',
+    contactPhone: '',
+    photos: [],
+    reward: '',
+    coordinates: null,
   });
 
 
   const [apiStatus, setApiStatus] = useState({ success: null, message: '' });
   const [previews, setPreviews] = useState([]);
   const fileInputRef = useRef(null);
-  const [addressSuggestions, setAddressSuggestions] = useState([]);
+  // const [addressSuggestions, setAddressSuggestions] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Função para gerar PDF do cartaz de desaparecimento
@@ -123,33 +122,14 @@ const MissingForm = () => {
 
 
 
-  // Buscar sugestões de endereço
-  useEffect(() => {
-    if (formData.lastSeenAddress.length > 3) {
-      const timer = setTimeout(() => {
-        fetchAddressSuggestions(formData.lastSeenAddress);
-      }, 500);
-      return () => clearTimeout(timer);
+  // Removido: sugestões de endereço, integração com mapa e chamadas à API Nominatim
+  // Modificação: se vier address do mapa, preenche o campo de endereço
+  const handleMapLocation = (coords) => {
+    if (coords && coords.address) {
+      setFormData(prev => ({ ...prev, coordinates: coords, lastSeenAddress: coords.address }));
+    } else {
+      setFormData(prev => ({ ...prev, coordinates: coords }));
     }
-  }, [formData.lastSeenAddress]);
-
-  const fetchAddressSuggestions = async (query) => {
-    try {
-      const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`);
-      setAddressSuggestions(response.data.slice(0, 5));
-    } catch (error) {
-      console.error('Erro ao buscar endereços:', error);
-    }
-  };
-
-  const handleAddressSelect = (suggestion) => {
-    const newPosition = [parseFloat(suggestion.lat), parseFloat(suggestion.lon)];
-    setFormData({
-      ...formData,
-      lastSeenAddress: suggestion.display_name,
-      coordinates: { lat: newPosition[0], lng: newPosition[1] }
-    });
-    setAddressSuggestions([]);
   };
 
   const handleChange = (e) => {
@@ -220,7 +200,7 @@ const MissingForm = () => {
           description: formData.description,
           contactPhone: formData.contactPhone,
           reward: formData.reward,
-          urgency: formData.urgency,
+          // urgency removido
           coordinates: formData.coordinates,
           foto: fotoBase64,
         }
@@ -239,7 +219,7 @@ const MissingForm = () => {
           contactPhone: '',
           photos: [],
           reward: '',
-          urgency: 'medium',
+          // urgency removido
           coordinates: null,
         });
         setPreviews([]);
@@ -265,7 +245,7 @@ const MissingForm = () => {
         <div className="form-section">
           <h3 className="section-title">Informações do Animal</h3>
           <div className="form-group">
-            <label htmlFor="petName">Nome do Animal *</label>
+            <label htmlFor="petName">Nome do Animal:</label>
             <input
               type="text"
               id="petName"
@@ -277,7 +257,7 @@ const MissingForm = () => {
           </div>
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="species">Espécie *</label>
+              <label htmlFor="species">Espécie:</label>
               <select
                 id="species"
                 name="species"
@@ -292,7 +272,7 @@ const MissingForm = () => {
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="breed">Raça</label>
+              <label htmlFor="breed">Raça:</label>
               <input
                 type="text"
                 id="breed"
@@ -302,7 +282,7 @@ const MissingForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="size">Porte</label>
+              <label htmlFor="size">Porte:</label>
               <select
                 id="size"
                 name="size"
@@ -318,7 +298,7 @@ const MissingForm = () => {
             </div>
           </div>
           <div className="form-group">
-            <label>Fotos do Animal *</label>
+            <label>Fotos do Animal:</label>
             <div className="photo-upload-container">
               <button 
                 type="button"
@@ -353,7 +333,7 @@ const MissingForm = () => {
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="description">Descrição (opcional)</label>
+            <label htmlFor="description">Descrição (opcional):</label>
             <textarea
               id="description"
               name="description"
@@ -367,7 +347,7 @@ const MissingForm = () => {
         <div className="form-section">
           <h3 className="section-title">Detalhes do Desaparecimento</h3>
           <div className="form-group">
-            <label htmlFor="lastSeenDate">Data do Desaparecimento *</label>
+            <label htmlFor="lastSeenDate">Data do Desaparecimento:</label>
             <input
               type="date"
               id="lastSeenDate"
@@ -378,7 +358,7 @@ const MissingForm = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="lastSeenAddress">Último Local Visto *</label>
+            <label htmlFor="lastSeenAddress">Último Local Visto:</label>
             <input
               type="text"
               id="lastSeenAddress"
@@ -388,26 +368,12 @@ const MissingForm = () => {
               placeholder="Digite o endereço aproximado"
               required
             />
-            {addressSuggestions.length > 0 && (
-              <div className="address-suggestions">
-                {addressSuggestions.map((suggestion, index) => (
-                  <div 
-                    key={index}
-                    className="suggestion-item"
-                    onClick={() => handleAddressSelect(suggestion)}
-                  >
-                    {suggestion.display_name}
-                  </div>
-                ))}
-              </div>
-            )}
+
           </div>
           <div className="form-group">
-            <label>Marque a localização exata no mapa *</label>
+            <label>Marque a localização exata no mapa:</label>
             <MissingMap 
-              onLocationSelect={(coords) => {
-                setFormData(prev => ({ ...prev, coordinates: coords }));
-              }}
+              onLocationSelect={handleMapLocation}
               initialPosition={formData.coordinates}
             />
             <p className="hint">Clique no mapa para marcar a localização exata</p>
@@ -416,7 +382,7 @@ const MissingForm = () => {
         <div className="form-section">
           <h3 className="section-title">Informações de Contato</h3>
           <div className="form-group">
-            <label htmlFor="contactPhone">Telefone para Contato *</label>
+            <label htmlFor="contactPhone">Telefone para Contato:</label>
             <input
               type="tel"
               id="contactPhone"
@@ -428,19 +394,6 @@ const MissingForm = () => {
             />
           </div>
           <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="urgency">Urgência</label>
-              <select
-                id="urgency"
-                name="urgency"
-                value={formData.urgency}
-                onChange={handleChange}
-              >
-                <option value="low">Baixa</option>
-                <option value="medium">Média</option>
-                <option value="high">Alta</option>
-              </select>
-            </div>
             <div className="form-group">
               <label htmlFor="reward">Recompensa (opcional)</label>
               <input
